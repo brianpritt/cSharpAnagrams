@@ -15,42 +15,28 @@ namespace Anagrams.Objects
       _inputtedWord = InputtedWord;
       _possibleAnagrams = PossibleAnagrams;
     }
-
-    public List<bool> ComapareLength()
+    public List<string> FindAnagrams()
     {
       int InputtedWordLength = _inputtedWord.Length;
-      int index = 0;
-      List<bool> returnedWords = new List<bool> {};
+      List<string> returnedWords = new List<string> {};
       char[] splitUserWord = _inputtedWord.ToCharArray();
       Array.Sort(splitUserWord);
-      Console.WriteLine(splitUserWord);
       foreach (string word in _possibleAnagrams)
       {
         if(InputtedWordLength == word.Length)
         {
           char[] splitListWord = word.ToCharArray();
           Array.Sort(splitListWord);
-          Console.WriteLine(splitListWord);
-
+          int index = 0;
           foreach (char letter in splitUserWord)
           {
             if (letter != splitListWord[index])
             {
-              Console.WriteLine(letter);
-              returnedWords.Add(false);
-              //break;
-            }
-            else
-            {
-              returnedWords.Add(true);
+              break;
             }
             index++;
           }
-        //  returnedWords.Add(true);
-        }else
-        {
-          returnedWords.Add(false);
-          //returnedWords.Add(false);
+          returnedWords.Add(word);
         }
       }
     return returnedWords;

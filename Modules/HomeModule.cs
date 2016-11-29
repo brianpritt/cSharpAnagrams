@@ -1,14 +1,23 @@
 using Nancy;
 using System.Collections.Generic;
+using Anagrams.Objects;
 
-namespace EnterNamespaceHere //replace with your desired namespace
+
+namespace Anagrams //replace with your desired namespace
 {
   public class HomeModule : NancyModule
   {
     public HomeModule()
     {
-      Get["/"] = _ => View["index.cshtml"];
-      //Insert your GETs and POSTs here
+      Get["/"] = _ => {
+        return View["index.cshtml"];
+      };
+      Post["/result_form"] = _ =>{
+        List<string> newList = new List<string>{Request.Form["anagram-one"], Request.Form["anagram-two"]};
+        Anagram newAnagram = new Anagram(Request.Form["user-word"], newList);
+        List<string> finalResults = newAnagram.FindAnagrams();
+        return View["result.cshtml", finalResults];
+      };
     }
   }
 }
